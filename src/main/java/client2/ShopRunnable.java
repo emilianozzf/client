@@ -1,5 +1,6 @@
 package client2;
 
+import com.squareup.okhttp.OkHttpClient;
 import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
 import io.swagger.client.ApiResponse;
@@ -7,6 +8,7 @@ import io.swagger.client.api.PurchaseApi;
 import io.swagger.client.model.Purchase;
 import io.swagger.client.model.PurchaseItems;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ShopRunnable implements Runnable {
   private int shopId;
@@ -42,8 +44,12 @@ public class ShopRunnable implements Runnable {
 
   public void run() {
     ApiClient shop = new ApiClient();
-    shop.setConnectTimeout(20000);
     shop.setBasePath(this.basePath);
+    OkHttpClient httpClient = shop.getHttpClient();
+    httpClient.setConnectTimeout(60, TimeUnit.SECONDS);
+    httpClient.setReadTimeout(60, TimeUnit.SECONDS);
+    httpClient.setWriteTimeout(60, TimeUnit.SECONDS);
+
     PurchaseApi apiInstance = new PurchaseApi(shop);
     for (int i = 0; i < 9 * this.numPurchases; i++) {
       Purchase purchase = new Purchase();

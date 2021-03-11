@@ -74,14 +74,14 @@ public class MultithreadedClient {
     System.out.println("Total number of successful requests sent: " + multithreadedClient.numSuccessfulRequests);
     System.out.println("Total number of unsuccessful requests sent: " + multithreadedClient.numUnsuccessfulRequests);
     System.out.println("The wall time (milliseconds): " + (end - start));
-    System.out.println("The throughput (requests/second): " + (multithreadedClient.numRequests/((end-start)/1000)));
+    System.out.println("The throughput (requests/second): " + (multithreadedClient.numSuccessfulRequests/((end-start)/1000)));
   }
 
   private static HashMap<String, String> parseArgs(String[] args) {
     HashMap<String, String> argsMap = new HashMap<>();
     argsMap.put("numCustomersPerStore", "1000");
     argsMap.put("maxItemId", "100000");
-    argsMap.put("numPurchases", "60");
+    argsMap.put("numPurchases", "300");
     argsMap.put("numItemsPurPurchase", "5");
     argsMap.put("date", "20210101");
 
